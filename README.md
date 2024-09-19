@@ -85,6 +85,8 @@ classDiagram
 
 ## Next stage considerations
 
+- The manager doesn't provide multi-threading support in order to allow drivers that already use a multi-threading model to benefit from the missing overhead. The `serial_driver.go` is an example on a proxy driver that provides serial access to the underlying driver, e.g. for streaming character devices.
+  - In the same manner we could build a proxy driver for in memory buffering and then commit, based on some specific heuristics and specific configuration.
 - Provide a global log instance that logs to console to seamless use without a specific configuration
 - Better handing and precision for the timestamp for short event telemetry (e.g. nanoseconds)
 
