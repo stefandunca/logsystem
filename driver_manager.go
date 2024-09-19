@@ -35,11 +35,11 @@ func (m *DriverManager) log(data map[Param]string) {
 	}
 }
 
-func (m *DriverManager) beginTx() TxID {
+func (m *DriverManager) beginTx(attr map[Param]string) TxID {
 	txID := TxID(m.lastTxID.Add(1))
 
 	for _, driver := range m.drivers {
-		driver.beginTx(txID)
+		driver.beginTx(txID, attr)
 	}
 	return txID
 }

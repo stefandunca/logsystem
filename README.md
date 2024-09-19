@@ -43,7 +43,7 @@ The following diagram shows the high level architecture of the package.
 
 ```mermaid
 classDiagram
-    class Log {
+    class Logger {
         +NewLog(manager: DriverManager)
         +log(...)
         +beginTx(...) TxID
@@ -86,6 +86,7 @@ classDiagram
 ## Next stage considerations
 
 - Provide a global log instance that logs to console to seamless use without a specific configuration
+- Better handing and precision for the timestamp for short event telemetry (e.g. nanoseconds)
 
 ## Debugging and testing
 
@@ -93,4 +94,10 @@ Continuous testing example
 
 ```sh
 nodemon --ext "*.go" --exec 'sh -c "go test . -v -run TestDriverManagerIntegration" || exit 1'
+```
+
+Run the example
+
+```sh
+go run example/example.go example/config.json
 ```

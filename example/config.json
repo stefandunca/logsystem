@@ -1,5 +1,7 @@
 {
     "drivers": {
-        "console": {}
+        "console": {
+            "userReadableTime": true
+        }
     }
 }

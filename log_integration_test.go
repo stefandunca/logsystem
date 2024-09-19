@@ -39,8 +39,8 @@ func (m *MockDriver) log(data map[Param]string) {
 	m.Called(data)
 }
 
-func (m *MockDriver) beginTx(id TxID) {
-	m.Called(id)
+func (m *MockDriver) beginTx(id TxID, attr map[Param]string) {
+	m.Called(id, attr)
 }
 
 func (m *MockDriver) endTx(txID TxID) {

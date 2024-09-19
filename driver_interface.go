@@ -14,6 +14,7 @@ func (id TxID) String() string {
 
 type DriverFactoryInterface interface {
 	driverID() DriverID
+	// createDriver returns nil if the driver could not be created
 	createDriver(config json.RawMessage) DriverInterface
 }
 
@@ -38,6 +39,6 @@ const (
 
 type DriverInterface interface {
 	log(data map[Param]string)
-	beginTx(id TxID)
+	beginTx(id TxID, attr map[Param]string)
 	endTx(id TxID)
 }
