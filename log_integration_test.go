@@ -49,7 +49,6 @@ func (m *MockDriver) endTx(txID TxID) {
 
 // TestDriverManagerIntegration tests the integration of the DriverManager with the DriverInterface
 func TestDriverManagerIntegration(t *testing.T) {
-	//
 	// Prepare dummy driver and factory
 	//
 
@@ -72,12 +71,11 @@ func TestDriverManagerIntegration(t *testing.T) {
 		mockFactories = append(mockFactories, mockFactory)
 	}
 
-	//
-	// Validate assumptions
+	// Call manager API and validate expectations
 	//
 
 	manager := NewManager(mockFactories, Config{
-		drivers: map[DriverID]json.RawMessage{
+		Drivers: map[DriverID]json.RawMessage{
 			mockFactories[0].driverID(): dummyConfig,
 			mockFactories[1].driverID(): dummyConfig,
 		},
@@ -108,6 +106,9 @@ func TestDriverManagerIntegration(t *testing.T) {
 	}
 	manager.log(txLogPayload)
 	manager.endTx(txID)
+
+	// Validate expectations for all mocks
+	//
 
 	for _, mockFactoryIf := range mockFactories {
 		mockFactory := mockFactoryIf.(*MockDriverFactory)

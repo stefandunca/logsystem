@@ -16,7 +16,7 @@
         - Log levels: Info, Debug, Warning, Error
         - Context
         - Transaction ID
-      - Application-based string based key value (e.g. Customer ID, Component level)
+      - Application-related string based key value (e.g. Customer ID, Component level)
   - Transactional logging
 - Configurable: Customizable by a configuration file without touching the core code or
 the code which uses this package.
@@ -81,4 +81,12 @@ classDiagram
     DriverInterface <|-- ConsoleDriver : "Implements"
     DriverInterface <|-- FileDriver : "Implements"
     DriverInterface <|-- HttpJsonDriver : "Implements"
+```
+
+## Debugging and testing
+
+Continuous testing example
+
+```sh
+nodemon --ext "*.go" --exec 'sh -c "go test . -v -run TestDriverManagerIntegration" || exit 1'
 ```

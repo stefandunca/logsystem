@@ -11,8 +11,8 @@ type DriverManager struct {
 func NewManager(factories []DriverFactoryInterface, config Config) *DriverManager {
 	drivers := make([]DriverInterface, 0, len(factories))
 	for _, factory := range factories {
-		if _, ok := config.drivers[factory.driverID()]; ok {
-			driver := factory.createDriver(config.drivers[factory.driverID()])
+		if _, ok := config.Drivers[factory.driverID()]; ok {
+			driver := factory.createDriver(config.Drivers[factory.driverID()])
 			drivers = append(drivers, driver)
 		}
 	}
