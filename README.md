@@ -83,6 +83,10 @@ classDiagram
     DriverInterface <|-- HttpJsonDriver : "Implements"
 ```
 
+## Next stage considerations
+
+- Provide a global log instance that logs to console to seamless use without a specific configuration
+
 ## Debugging and testing
 
 Continuous testing example

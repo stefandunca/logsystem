@@ -20,11 +20,20 @@ type DriverFactoryInterface interface {
 type Param string
 
 const (
-	MessageParam   Param = "_message"
-	TimeParam      Param = "_time"
-	LevelParam     Param = "_level"
-	ComponentParam Param = "_component"
-	TxIDParam      Param = "_txID"
+	MessageParam   Param = "message"
+	TimeParam      Param = "time"  // Unix timestamp
+	LevelParam     Param = "level" // LogLevel
+	ComponentParam Param = "component"
+	TxIDParam      Param = "txID"
+)
+
+type LogLevel string
+
+const (
+	Info  LogLevel = "info"
+	Debug LogLevel = "debug"
+	Warn  LogLevel = "warn"
+	Error LogLevel = "error"
 )
 
 type DriverInterface interface {

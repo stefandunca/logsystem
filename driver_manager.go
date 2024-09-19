@@ -1,6 +1,9 @@
 package logsystem
 
-import "sync/atomic"
+import (
+	"log"
+	"sync/atomic"
+)
 
 type DriverManager struct {
 	drivers []DriverInterface
@@ -13,6 +16,10 @@ func NewManager(factories []DriverFactoryInterface, config Config) *DriverManage
 	for _, factory := range factories {
 		if _, ok := config.Drivers[factory.driverID()]; ok {
 			driver := factory.createDriver(config.Drivers[factory.driverID()])
+			if driver == nil {
+				log.Printf("Failed to create driver %s", factory.driverID())
+				continue
+			}
 			drivers = append(drivers, driver)
 		}
 	}
