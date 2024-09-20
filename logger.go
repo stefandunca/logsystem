@@ -18,6 +18,7 @@ type TxLogger struct {
 func NewLogger(conf Config) *Logger {
 	factories := []DriverFactoryInterface{
 		&ConsoleDriverFactory{},
+		&DBDriverFactory{},
 	}
 	return NewLoggerWithDrivers(conf, factories)
 }
@@ -26,6 +27,10 @@ func NewLoggerWithDrivers(conf Config, factories []DriverFactoryInterface) *Logg
 	return &Logger{
 		mgr: NewManager(factories, conf),
 	}
+}
+
+func (l *Logger) Stop() {
+	l.mgr.stop()
 }
 
 func (l *Logger) Info(message string) {

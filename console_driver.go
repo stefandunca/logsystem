@@ -3,8 +3,6 @@ package logsystem
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -62,54 +60,29 @@ func (d *ConsoleDriver) endTx(id TxID) {
 	d.log(txData)
 }
 
-func formatLine(data map[Param]string, userFriendly bool) string {
-	var timestamp int64 = 0
-	if val, ok := data[TimeParam]; ok {
-		parsedTime, err := strconv.ParseInt(val, 10, 64)
-		if err != nil {
-			timestamp = parsedTime
-		}
-	}
+func (d *ConsoleDriver) stop() {
+}
 
-	if timestamp == 0 {
-		timestamp = time.Now().Unix()
-	}
+func formatLine(data map[Param]string, userFriendly bool) string {
+	p := extractKnownParams(data)
 
 	formattedTime := ""
 	if userFriendly {
-		t := time.Unix(timestamp, 0)
+		t := time.Unix(p.Timestamp, 0)
 		formattedTime = t.Format("[2006-01-02 15:04:05] ")
 	} else {
-		formattedTime = fmt.Sprintf("[%-10d] ", timestamp)
+		formattedTime = fmt.Sprintf("[%-10d] ", p.Timestamp)
 	}
 
-	level := ""
-	if val, ok := data[LevelParam]; ok {
-		level = strings.ToUpper(val)
-	}
-
-	message := ""
-	if val, ok := data[MessageParam]; ok {
-		message = val
-	}
-
-	component := ""
-	if val, ok := data[ComponentParam]; ok {
-		component = val
-	}
-	txID := ""
-	if val, ok := data[TxIDParam]; ok {
-		txID = val
-	}
 	optional := ""
-	if txID != "" || component != "" {
-		if component != "" {
-			optional = fmt.Sprintf("; Comp=[%s]", component)
+	if p.TxID != "" || p.Component != "" {
+		if p.Component != "" {
+			optional = fmt.Sprintf("; Comp=[%s]", p.Component)
 		}
-		if txID != "" {
-			optional = fmt.Sprintf("%s; TxID=[%s]", optional, txID)
+		if p.TxID != "" {
+			optional = fmt.Sprintf("%s; TxID=[%s]", optional, p.TxID)
 		}
 	}
 
-	return fmt.Sprintf("%s%-5s %s%s", formattedTime, level, message, optional)
+	return fmt.Sprintf("%s%-5s %s%s", formattedTime, p.Level, p.Message, optional)
 }

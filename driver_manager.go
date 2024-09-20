@@ -49,3 +49,9 @@ func (m *DriverManager) endTx(id TxID) {
 		driver.endTx(id)
 	}
 }
+
+func (m *DriverManager) stop() {
+	for _, driver := range m.drivers {
+		driver.stop()
+	}
+}

@@ -27,8 +27,8 @@ func TestDriverManager_FailToCreateDriver(t *testing.T) {
 
 func TestDriverManager_beginTx(t *testing.T) {
 	m := NewManager(nil, Config{})
-	txID := m.beginTx()
+	txID := m.beginTx(map[Param]string{})
 	require.Equal(t, TxID(1), txID)
-	txID = m.beginTx()
+	txID = m.beginTx(map[Param]string{})
 	require.Equal(t, TxID(2), txID)
 }

@@ -74,7 +74,7 @@ classDiagram
         +createDriver()
     }
     
-    Log --> DriverManager : "Sends log data"
+    Logger --> DriverManager : "Sends log data"
     DriverManager --> DriverInterface : "Distributes log data"
     DriverManager --> DriverFactoryInterface : "Creates drivers"
     DriverManager --> Configuration : "Fetches configuration"
@@ -89,6 +89,7 @@ classDiagram
   - In the same manner we could build a proxy driver for in memory buffering and then commit, based on some specific heuristics and specific configuration.
 - Provide a global log instance that logs to console to seamless use without a specific configuration
 - Better handing and precision for the timestamp for short event telemetry (e.g. nanoseconds)
+- Enhanced error handling; propagate error from drivers where it makes sense
 
 ## Debugging and testing
 

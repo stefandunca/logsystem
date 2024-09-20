@@ -47,6 +47,10 @@ func (m *MockDriver) endTx(txID TxID) {
 	m.Called(txID)
 }
 
+func (m *MockDriver) stop() {
+	m.Called()
+}
+
 // TestDriverManagerIntegration tests the integration of the DriverManager with the DriverInterface
 func TestDriverManagerIntegration(t *testing.T) {
 	// Prepare dummy driver and factory
@@ -92,10 +96,10 @@ func TestDriverManagerIntegration(t *testing.T) {
 
 	for _, mockDriver := range mockDrivers {
 		mockDriver.On("log", simpleLogPayload).Once()
-		mockDriver.On("beginTx", mock.AnythingOfType("logsystem.TxID")).Once()
+		mockDriver.On("beginTx", mock.AnythingOfType("logsystem.TxID"), mock.AnythingOfType("map[logsystem.Param]string")).Once()
 	}
 	manager.log(simpleLogPayload)
-	txID := manager.beginTx()
+	txID := manager.beginTx(map[Param]string{})
 
 	txLogPayload := map[Param]string{
 		TxIDParam: txID.String(),
@@ -103,9 +107,12 @@ func TestDriverManagerIntegration(t *testing.T) {
 	for _, mockDriver := range mockDrivers {
 		mockDriver.On("log", txLogPayload).Once()
 		mockDriver.On("endTx", txID).Once()
+		mockDriver.On("stop").Once()
 	}
 	manager.log(txLogPayload)
 	manager.endTx(txID)
+
+	manager.stop()
 
 	// Validate expectations for all mocks
 	//

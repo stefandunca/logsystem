@@ -41,4 +41,7 @@ type DriverInterface interface {
 	log(data map[Param]string)
 	beginTx(id TxID, attr map[Param]string)
 	endTx(id TxID)
+
+	// shutdown the driver
+	stop()
 }

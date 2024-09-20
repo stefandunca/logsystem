@@ -2,6 +2,10 @@
     "drivers": {
         "console": {
             "userReadableTime": true
+        },
+        "sqlite": {
+            "dbPath": "example/example.db",
+            "txAttr": ["UserID"]
         }
     }
 }
