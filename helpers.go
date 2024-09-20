@@ -1,6 +1,7 @@
 package logsystem
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -12,6 +13,30 @@ type KnownParams struct {
 	Message   string
 	Component string
 	TxID      string
+}
+
+func formatLine(data map[Param]string, userFriendly bool) string {
+	p := extractKnownParams(data)
+
+	formattedTime := ""
+	if userFriendly {
+		t := time.Unix(p.Timestamp, 0)
+		formattedTime = t.Format("[2006-01-02 15:04:05] ")
+	} else {
+		formattedTime = fmt.Sprintf("[%-10d] ", p.Timestamp)
+	}
+
+	optional := ""
+	if p.TxID != "" || p.Component != "" {
+		if p.Component != "" {
+			optional = fmt.Sprintf("; Comp=[%s]", p.Component)
+		}
+		if p.TxID != "" {
+			optional = fmt.Sprintf("%s; TxID=[%s]", optional, p.TxID)
+		}
+	}
+
+	return fmt.Sprintf("%s%-5s %s%s", formattedTime, p.Level, p.Message, optional)
 }
 
 func extractKnownParams(data map[Param]string) KnownParams {

@@ -18,6 +18,7 @@ type TxLogger struct {
 func NewLogger(conf Config) *Logger {
 	factories := []DriverFactoryInterface{
 		&ConsoleDriverFactory{},
+		&FileDriverFactory{},
 		&DBDriverFactory{},
 	}
 	return NewLoggerWithDrivers(conf, factories)

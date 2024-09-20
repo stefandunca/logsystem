@@ -6,6 +6,10 @@
         "sqlite": {
             "dbPath": "example/example.db",
             "txAttr": ["UserID"]
+        },
+        "file": {
+            "filePath": "example/example.log",
+            "userReadableTime": false
         }
     }
 }

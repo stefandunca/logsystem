@@ -93,6 +93,28 @@ classDiagram
 
 ## Debugging and testing
 
+Running tests
+
+```sh
+> go test . -v
+=== RUN   Test_loadConfig
+=== RUN   Test_loadConfig/empty
+=== RUN   Test_loadConfig/two_drivers
+=== RUN   Test_loadConfig/invalid_json
+--- PASS: Test_loadConfig (0.00s)
+    --- PASS: Test_loadConfig/empty (0.00s)
+    --- PASS: Test_loadConfig/two_drivers (0.00s)
+    --- PASS: Test_loadConfig/invalid_json (0.00s)
+=== RUN   TestDriverManager_FailToCreateDriver
+--- PASS: TestDriverManager_FailToCreateDriver (0.00s)
+=== RUN   TestDriverManager_beginTx
+--- PASS: TestDriverManager_beginTx (0.00s)
+=== RUN   TestDriverManagerIntegration
+--- PASS: TestDriverManagerIntegration (0.00s)
+PASS
+ok  	logsystem	0.296s
+```
+
 Continuous testing example
 
 ```sh
@@ -104,3 +126,13 @@ Run the example
 ```sh
 go run example/example.go example/config.json
 ```
+
+Check the output
+
+- Console for having human readable output for timestamp
+  - ![console out](./docs/console_out.png)
+- `example.log` for file output with unix timestamp
+  - ![example.log](./docs/file_out.png)
+- `example.db` for structured output
+  - run `./example/show_db.sh`
+    - ![db out](./docs/db_out.png)
