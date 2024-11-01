@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"logsystem"
 	"logsystem/example/helpers"
 	"os"
@@ -12,7 +13,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	l := logsystem.NewLogger(conf)
+	m, err := logsystem.CreateLogManagerWithConfig(
+		[]logsystem.DriverFactoryInterface{
+			&logsystem.ConsoleDriverFactory{},
+			&logsystem.FileDriverFactory{},
+			&logsystem.DBDriverFactory{},
+		},
+		conf,
+	)
+	if err != nil {
+		if err != logsystem.ErrorSomeDriversFailed {
+			os.Exit(1)
+		}
+		fmt.Println("Some drivers failed to initialize; check logs for details")
+	}
+
+	l := logsystem.NewLogger(m)
 	defer l.Stop()
 	l.Info("Hello, world!")
 	tl := l.BeginTx(map[logsystem.Param]string{"UserID": "123"})

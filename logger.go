@@ -15,18 +15,9 @@ type TxLogger struct {
 	component string
 }
 
-func NewLogger(conf Config) *Logger {
-	factories := []DriverFactoryInterface{
-		&ConsoleDriverFactory{},
-		&FileDriverFactory{},
-		&DBDriverFactory{},
-	}
-	return NewLoggerWithDrivers(conf, factories)
-}
-
-func NewLoggerWithDrivers(conf Config, factories []DriverFactoryInterface) *Logger {
+func NewLogger(m *DriverManager) *Logger {
 	return &Logger{
-		mgr: NewManager(factories, conf),
+		mgr: m,
 	}
 }
 

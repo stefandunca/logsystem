@@ -1,18 +1,36 @@
-[1726828436] INFO  Hello, world!
-[1726828436] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
-[1726828436] WARN  Doing something in TX; TxID=[1]
-[1726828436] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
-[1726828436] INFO  TX End; TxID=[1]
-[1726828436] DEBUG Outside TX
-[1726828436] WARN  Doing something in TX 2; TxID=[2]
-[1726828436] ERROR Error
-[1726828436] INFO  TX End; TxID=[2]
-[1726828438] INFO  Hello, world!
-[1726828438] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
-[1726828438] WARN  Doing something in TX; TxID=[1]
-[1726828438] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
-[1726828438] INFO  TX End; TxID=[1]
-[1726828438] DEBUG Outside TX
-[1726828438] WARN  Doing something in TX 2; TxID=[2]
-[1726828438] ERROR Error
-[1726828438] INFO  TX End; TxID=[2]
+[1730481776] INFO  Hello, world!
+[1730481776] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
+[1730481776] WARN  Doing something in TX; TxID=[1]
+[1730481776] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
+[1730481776] INFO  TX End; TxID=[1]
+[1730481776] DEBUG Outside TX
+[1730481776] WARN  Doing something in TX 2; TxID=[2]
+[1730481776] ERROR Error
+[1730481776] INFO  TX End; TxID=[2]
+[1730481906] INFO  Hello, world!
+[1730481906] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
+[1730481906] WARN  Doing something in TX; TxID=[1]
+[1730481906] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
+[1730481906] INFO  TX End; TxID=[1]
+[1730481906] DEBUG Outside TX
+[1730481906] WARN  Doing something in TX 2; TxID=[2]
+[1730481906] ERROR Error
+[1730481906] INFO  TX End; TxID=[2]
+[1730481981] INFO  Hello, world!
+[1730481981] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
+[1730481981] WARN  Doing something in TX; TxID=[1]
+[1730481981] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
+[1730481981] INFO  TX End; TxID=[1]
+[1730481981] DEBUG Outside TX
+[1730481981] WARN  Doing something in TX 2; TxID=[2]
+[1730481981] ERROR Error
+[1730481981] INFO  TX End; TxID=[2]
+[1730482031] INFO  Hello, world!
+[1730482031] INFO  TX Begin; Params: map[UserID:123]; TxID=[1]
+[1730482031] WARN  Doing something in TX; TxID=[1]
+[1730482031] INFO  TX Begin; Params: map[UserID:456]; TxID=[2]
+[1730482031] INFO  TX End; TxID=[1]
+[1730482031] DEBUG Outside TX
+[1730482031] WARN  Doing something in TX 2; TxID=[2]
+[1730482031] ERROR Error
+[1730482031] INFO  TX End; TxID=[2]

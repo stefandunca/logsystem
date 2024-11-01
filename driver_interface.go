@@ -13,9 +13,8 @@ func (id TxID) String() string {
 }
 
 type DriverFactoryInterface interface {
-	driverID() DriverID
-	// createDriver returns nil if the driver could not be created and should not be used
-	createDriver(config json.RawMessage) DriverInterface
+	DriverID() DriverID
+	CreateDriver(config json.RawMessage) (DriverInterface, error)
 }
 
 type Param string

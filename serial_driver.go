@@ -23,12 +23,12 @@ func NewSerialDriverFactory(provider DriverFactoryInterface) *SerialDriverFactor
 	}
 }
 
-func (f *SerialDriverFactory) driverID() DriverID {
-	return DriverID(string(f.provider.driverID()) + SerialDriverIDPostfix)
+func (f *SerialDriverFactory) DriverID() DriverID {
+	return DriverID(string(f.provider.DriverID()) + SerialDriverIDPostfix)
 }
 
-func (f *SerialDriverFactory) createDriver(config json.RawMessage) DriverInterface {
-	return f.provider.createDriver(config)
+func (f *SerialDriverFactory) CreateDriver(config json.RawMessage) (DriverInterface, error) {
+	return f.provider.CreateDriver(config)
 }
 
 // SerialDriver implements DriverInterface
