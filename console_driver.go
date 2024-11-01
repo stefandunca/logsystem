@@ -15,21 +15,20 @@ type consoleConfig struct {
 type ConsoleDriverFactory struct {
 }
 
-func (f *ConsoleDriverFactory) driverID() DriverID {
+func (f *ConsoleDriverFactory) DriverID() DriverID {
 	return DriverID(ConsoleDriverID)
 }
 
-func (f *ConsoleDriverFactory) createDriver(config json.RawMessage) DriverInterface {
+func (f *ConsoleDriverFactory) CreateDriver(config json.RawMessage) (DriverInterface, error) {
 	var consoleConfig consoleConfig
 	err := json.Unmarshal(config, &consoleConfig)
 	if err != nil {
-		fmt.Printf("Failed to unmarshal console driver config: %v\n", err)
-		return nil
+		return nil, fmt.Errorf("failed to unmarshal console driver config: %w", err)
 	}
 
 	return &ConsoleDriver{
 		config: consoleConfig,
-	}
+	}, nil
 }
 
 // ConsoleDriver implements DriverInterface

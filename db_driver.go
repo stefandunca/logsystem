@@ -3,6 +3,7 @@ package logsystem
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -21,16 +22,16 @@ type sqliteConfig struct {
 type DBDriverFactory struct {
 }
 
-func (f *DBDriverFactory) driverID() DriverID {
+func (f *DBDriverFactory) DriverID() DriverID {
 	return DriverID(SQLiteDriverID)
 }
 
-func (f *DBDriverFactory) createDriver(config json.RawMessage) DriverInterface {
+func (f *DBDriverFactory) CreateDriver(config json.RawMessage) (drv DriverInterface, err error) {
 	var sqliteConfig sqliteConfig
-	err := json.Unmarshal(config, &sqliteConfig)
+	err = json.Unmarshal(config, &sqliteConfig)
 	if err != nil {
 		fmt.Printf("Failed to unmarshal SQLite driver config: %v\n", err)
-		return nil
+		return nil, errors.Join(errors.New("failed to unmarshal SQLite driver config"), err)
 	}
 
 	driver := &SQLiteDriver{
@@ -39,11 +40,10 @@ func (f *DBDriverFactory) createDriver(config json.RawMessage) DriverInterface {
 
 	err = driver.initDB()
 	if err != nil {
-		fmt.Printf("Failed to initialize SQLite database: %v\n", err)
-		return nil
+		return nil, err
 	}
 
-	return driver
+	return driver, nil
 }
 
 // SQLiteDriver implements DriverInterface

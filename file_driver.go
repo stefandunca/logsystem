@@ -17,27 +17,26 @@ type fileConfig struct {
 type FileDriverFactory struct {
 }
 
-func (f *FileDriverFactory) driverID() DriverID {
+func (f *FileDriverFactory) DriverID() DriverID {
 	return DriverID(FileDriverID)
 }
 
-func (f *FileDriverFactory) createDriver(config json.RawMessage) DriverInterface {
+func (f *FileDriverFactory) CreateDriver(config json.RawMessage) (DriverInterface, error) {
 	var fileConfig fileConfig
 	err := json.Unmarshal(config, &fileConfig)
 	if err != nil {
-		fmt.Printf("Failed to unmarshal file driver config: %v\n", err)
-		return nil
+		return nil, fmt.Errorf("failed to unmarshal file driver: %w", err)
 	}
 
 	file, err := openFile(fileConfig.FilePath)
 	if err != nil {
-		return nil
+		return nil, fmt.Errorf("failed to open file: %s; error: %w", fileConfig.FilePath, err)
 	}
 
 	return &FileDriver{
 		file:   file,
 		config: fileConfig,
-	}
+	}, nil
 }
 
 // FileDriver implements DriverInterface

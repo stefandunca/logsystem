@@ -70,8 +70,8 @@ classDiagram
     }
 
     class DriverFactoryInterface {
-        +driverID()
-        +createDriver()
+        +DriverID()
+        +CreateDriver()
     }
     
     Logger --> DriverManager : "Sends log data"
