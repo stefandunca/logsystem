@@ -37,20 +37,37 @@ type SerialDriver struct {
 	mutex    sync.Mutex
 }
 
-func (d *SerialDriver) log(data map[Param]string) {
-	d.mutex.Lock()
-	defer d.mutex.Unlock()
-	d.provider.log(data)
+func NewSerialDriver(provider DriverInterface) *SerialDriver {
+	_, ok := provider.(*SerialDriver)
+	if ok {
+		panic("SerialDriver cannot be nested")
+	}
+
+	return &SerialDriver{
+		provider: provider,
+	}
 }
 
-func (d *SerialDriver) beginTx(id TxID, attr map[Param]string) {
+func (d *SerialDriver) Log(data map[Param]string) {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
-	d.provider.beginTx(id, attr)
+	d.provider.Log(data)
 }
 
-func (d *SerialDriver) endTx(id TxID) {
+func (d *SerialDriver) BeginTx(id TxID, attr map[Param]string) {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
-	d.provider.endTx(id)
+	d.provider.BeginTx(id, attr)
+}
+
+func (d *SerialDriver) EndTx(id TxID) {
+	d.mutex.Lock()
+	defer d.mutex.Unlock()
+	d.provider.EndTx(id)
+}
+
+func (d *SerialDriver) Stop() {
+	d.mutex.Lock()
+	defer d.mutex.Unlock()
+	d.provider.Stop()
 }

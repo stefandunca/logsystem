@@ -98,7 +98,7 @@ func (d *SQLiteDriver) initDB() error {
 	return err
 }
 
-func (d *SQLiteDriver) log(data map[Param]string) {
+func (d *SQLiteDriver) Log(data map[Param]string) {
 	p := extractKnownParams(data)
 
 	_, err := d.db.Exec(`
@@ -111,7 +111,7 @@ func (d *SQLiteDriver) log(data map[Param]string) {
 	}
 }
 
-func (d *SQLiteDriver) beginTx(id TxID, attr map[Param]string) {
+func (d *SQLiteDriver) BeginTx(id TxID, attr map[Param]string) {
 	p := extractKnownParams(attr)
 
 	columns := []string{"start_timestamp", "id"}
@@ -147,7 +147,7 @@ func (d *SQLiteDriver) beginTx(id TxID, attr map[Param]string) {
 	}
 }
 
-func (d *SQLiteDriver) endTx(id TxID) {
+func (d *SQLiteDriver) EndTx(id TxID) {
 	timestamp := time.Now().Unix()
 
 	_, err := d.db.Exec(`
@@ -161,6 +161,6 @@ func (d *SQLiteDriver) endTx(id TxID) {
 	}
 }
 
-func (d *SQLiteDriver) stop() {
+func (d *SQLiteDriver) Stop() {
 	d.db.Close()
 }

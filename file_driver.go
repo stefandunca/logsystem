@@ -45,29 +45,29 @@ type FileDriver struct {
 	file   *os.File
 }
 
-func (d *FileDriver) log(data map[Param]string) {
+func (d *FileDriver) Log(data map[Param]string) {
 	line := formatLine(data, d.config.UserReadableTime)
 	d.file.WriteString(line + "\n")
 }
 
-func (d *FileDriver) beginTx(id TxID, attr map[Param]string) {
+func (d *FileDriver) BeginTx(id TxID, attr map[Param]string) {
 	txData := make(map[Param]string)
 	txData[TxIDParam] = id.String()
 	message := fmt.Sprintf("TX Begin; Params: %v", attr)
 	txData[MessageParam] = message
 	txData[LevelParam] = string(Info)
-	d.log(txData)
+	d.Log(txData)
 }
 
-func (d *FileDriver) endTx(id TxID) {
+func (d *FileDriver) EndTx(id TxID) {
 	txData := make(map[Param]string)
 	txData[TxIDParam] = id.String()
 	txData[MessageParam] = "TX End"
 	txData[LevelParam] = string(Info)
-	d.log(txData)
+	d.Log(txData)
 }
 
-func (d *FileDriver) stop() {
+func (d *FileDriver) Stop() {
 	if d.file != nil {
 		d.file.Close()
 	}

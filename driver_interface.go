@@ -38,10 +38,10 @@ const (
 
 // DriverInterface interface won't be called if the driver is not created successfully, therefore no need to handle creation errors
 type DriverInterface interface {
-	log(data map[Param]string)
-	beginTx(id TxID, attr map[Param]string)
-	endTx(id TxID)
+	Log(data map[Param]string)
+	BeginTx(id TxID, attr map[Param]string)
+	EndTx(id TxID)
 
 	// shutdown the driver
-	stop()
+	Stop()
 }
