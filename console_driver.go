@@ -36,27 +36,27 @@ type ConsoleDriver struct {
 	config consoleConfig
 }
 
-func (d *ConsoleDriver) log(data map[Param]string) {
+func (d *ConsoleDriver) Log(data map[Param]string) {
 	line := formatLine(data, d.config.UserReadableTime)
 	fmt.Println(line)
 }
 
-func (d *ConsoleDriver) beginTx(id TxID, attr map[Param]string) {
+func (d *ConsoleDriver) BeginTx(id TxID, attr map[Param]string) {
 	txData := make(map[Param]string)
 	txData[TxIDParam] = id.String()
 	message := fmt.Sprintf("TX Begin; Params: %v", attr)
 	txData[MessageParam] = message
 	txData[LevelParam] = string(Info)
-	d.log(txData)
+	d.Log(txData)
 }
 
-func (d *ConsoleDriver) endTx(id TxID) {
+func (d *ConsoleDriver) EndTx(id TxID) {
 	txData := make(map[Param]string)
 	txData[TxIDParam] = id.String()
 	txData[MessageParam] = "TX End"
 	txData[LevelParam] = string(Info)
-	d.log(txData)
+	d.Log(txData)
 }
 
-func (d *ConsoleDriver) stop() {
+func (d *ConsoleDriver) Stop() {
 }

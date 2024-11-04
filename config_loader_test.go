@@ -34,19 +34,19 @@ func (f *SuccessDriverFactory) CreateDriver(config json.RawMessage) (DriverInter
 	return &SuccessDriverFactory{}, nil
 }
 
-func (f *SuccessDriverFactory) beginTx(id TxID, attr map[Param]string) {
+func (f *SuccessDriverFactory) BeginTx(id TxID, attr map[Param]string) {
 	panic("Not expected to be called")
 }
 
-func (f *SuccessDriverFactory) endTx(txID TxID) {
+func (f *SuccessDriverFactory) EndTx(txID TxID) {
 	panic("Not expected to be called")
 }
 
-func (f *SuccessDriverFactory) log(map[Param]string) {
+func (f *SuccessDriverFactory) Log(map[Param]string) {
 	f.failCounts += 1
 }
 
-func (f *SuccessDriverFactory) stop() {
+func (f *SuccessDriverFactory) Stop() {
 	panic("Not expected to be called")
 }
 
@@ -163,8 +163,8 @@ func TestConfigLoaderIntegration(t *testing.T) {
 	}
 
 	for _, mockDriver := range mockDrivers {
-		mockDriver.On("log", simpleLogPayload).Once()
-		mockDriver.On("beginTx", mock.AnythingOfType("logsystem.TxID"), mock.AnythingOfType("map[logsystem.Param]string")).Once()
+		mockDriver.On("Log", simpleLogPayload).Once()
+		mockDriver.On("BeginTx", mock.AnythingOfType("logsystem.TxID"), mock.AnythingOfType("map[logsystem.Param]string")).Once()
 	}
 	manager.log(simpleLogPayload)
 	txID := manager.beginTx(map[Param]string{})
@@ -173,9 +173,9 @@ func TestConfigLoaderIntegration(t *testing.T) {
 		TxIDParam: txID.String(),
 	}
 	for _, mockDriver := range mockDrivers {
-		mockDriver.On("log", txLogPayload).Once()
-		mockDriver.On("endTx", txID).Once()
-		mockDriver.On("stop").Once()
+		mockDriver.On("Log", txLogPayload).Once()
+		mockDriver.On("EndTx", txID).Once()
+		mockDriver.On("Stop").Once()
 	}
 	manager.log(txLogPayload)
 	manager.endTx(txID)

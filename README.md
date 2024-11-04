@@ -46,7 +46,7 @@ classDiagram
     class Logger {
         +NewLog(manager: DriverManager)
         +log(...)
-        +beginTx(...) TxID
+        +BeginTx(...) TxID
         +logTx(txID, ...) 
         +endTx(txID)
     }
@@ -59,7 +59,7 @@ classDiagram
     class DriverInterface {
         <<Interface>>
         +logData(...)
-        +beginTx()
+        +BeginTx()
         +endTx(txID)
         +configure(jsonConfig)
     }

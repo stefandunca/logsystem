@@ -14,13 +14,17 @@ func NewManager() *DriverManager {
 	return &DriverManager{}
 }
 
+func (m *DriverManager) AddDriver(driver DriverInterface) {
+	m.drivers = append(m.drivers, driver)
+}
+
 func (m *DriverManager) AddDrivers(drivers []DriverInterface) {
 	m.drivers = append(m.drivers, drivers...)
 }
 
 func (m *DriverManager) log(data map[Param]string) {
 	for _, driver := range m.drivers {
-		driver.log(data)
+		driver.Log(data)
 	}
 }
 
@@ -28,19 +32,19 @@ func (m *DriverManager) beginTx(attr map[Param]string) TxID {
 	txID := TxID(m.lastTxID.Add(1))
 
 	for _, driver := range m.drivers {
-		driver.beginTx(txID, attr)
+		driver.BeginTx(txID, attr)
 	}
 	return txID
 }
 
 func (m *DriverManager) endTx(id TxID) {
 	for _, driver := range m.drivers {
-		driver.endTx(id)
+		driver.EndTx(id)
 	}
 }
 
 func (m *DriverManager) stop() {
 	for _, driver := range m.drivers {
-		driver.stop()
+		driver.Stop()
 	}
 }

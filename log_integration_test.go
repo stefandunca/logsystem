@@ -14,19 +14,19 @@ type MockDriver struct {
 }
 
 // MockDriver mocks DriverInterface
-func (m *MockDriver) log(data map[Param]string) {
+func (m *MockDriver) Log(data map[Param]string) {
 	m.Called(data)
 }
 
-func (m *MockDriver) beginTx(id TxID, attr map[Param]string) {
+func (m *MockDriver) BeginTx(id TxID, attr map[Param]string) {
 	m.Called(id, attr)
 }
 
-func (m *MockDriver) endTx(txID TxID) {
+func (m *MockDriver) EndTx(txID TxID) {
 	m.Called(txID)
 }
 
-func (m *MockDriver) stop() {
+func (m *MockDriver) Stop() {
 	m.Called()
 }
 
@@ -45,11 +45,9 @@ func TestDriverManagerIntegration(t *testing.T) {
 	manager := NewManager()
 	require.Equal(t, 0, len(manager.drivers))
 
-	mockedDriverInterfaces := make([]DriverInterface, 0)
 	for _, mockDriver := range mockDrivers {
-		mockedDriverInterfaces = append(mockedDriverInterfaces, mockDriver)
+		manager.AddDriver(mockDriver)
 	}
-	manager.AddDrivers(mockedDriverInterfaces)
 
 	simpleLogPayload := map[Param]string{
 		TimeParam:      strconv.FormatInt(time.Now().Unix(), 10),
@@ -59,8 +57,8 @@ func TestDriverManagerIntegration(t *testing.T) {
 	}
 
 	for _, mockDriver := range mockDrivers {
-		mockDriver.On("log", simpleLogPayload).Once()
-		mockDriver.On("beginTx", mock.AnythingOfType("logsystem.TxID"), mock.AnythingOfType("map[logsystem.Param]string")).Once()
+		mockDriver.On("Log", simpleLogPayload).Once()
+		mockDriver.On("BeginTx", mock.AnythingOfType("logsystem.TxID"), mock.AnythingOfType("map[logsystem.Param]string")).Once()
 	}
 	manager.log(simpleLogPayload)
 	txID := manager.beginTx(map[Param]string{})
@@ -69,9 +67,9 @@ func TestDriverManagerIntegration(t *testing.T) {
 		TxIDParam: txID.String(),
 	}
 	for _, mockDriver := range mockDrivers {
-		mockDriver.On("log", txLogPayload).Once()
-		mockDriver.On("endTx", txID).Once()
-		mockDriver.On("stop").Once()
+		mockDriver.On("Log", txLogPayload).Once()
+		mockDriver.On("EndTx", txID).Once()
+		mockDriver.On("Stop").Once()
 	}
 	manager.log(txLogPayload)
 	manager.endTx(txID)
